@@ -76,3 +76,19 @@ a?++;
 a?--;
 --?a;
 ```
+
+## Questions
+
+Why not just implicitly check the whole left hand side rather than requiring explicit optional chaining?
+
+```js
+a.b.c.d ?= 1;
+```
+
+Having that expand into ```if (a?.b?.c?.d ?? false)``` would be convenient, but it's also hiding a lot of branching. By forcing the user to be explicit it lowers that penalty. It also doesn't allow for ```d``` to not be set when it's ```undefined``` or ```null```. Sometimes you don't want to add a property to an object if it doesn't already exist. (Though that might be niche). A better example is like:
+
+```js
+//a.b.c.d = null;
+//a.b.c.d = 20;
+a.b.c.d ?+= 10; // Keep d null else add 10 
+```
